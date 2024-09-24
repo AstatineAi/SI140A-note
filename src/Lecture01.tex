@@ -1,0 +1,200 @@
+% 定义
+% \begin{definition}{标题}{引用标签}\index{glossary用的拼音@glossary 内容}
+% content
+% \end{definition}
+
+% 定理
+% \begin{theorem}{标题}{引用标签} 
+% content
+% \end{theorem}
+
+% \begin{equation}\label{eq:2:引用标签}
+%   content
+% \end{equation}
+
+% 引用定义
+% \autoref{def:引用标签}
+
+% 引用定理
+% \autoref{thm:引用标签}
+
+% 引用等式
+% \autoref{eq:2:引用标签}
+
+% 同理，引理 -> lemma lem
+%       例子 -> example ex
+%       推论 -> corollary cor
+
+\chapter{概率与计数 Probability and Counting}
+
+\section{概率模型 Probabilistic Model}
+
+\begin{definition}{集合}{集合}\index{jihe@集合 (Set)}
+    
+    \begin{enumerate}
+        \item 空集： $\emptyset$
+        \item 子集（subset）关系：$A \subseteq B$
+        \item 交（union）：$A \cup B$
+        \item 并（intersection）：$A \cap B$
+        \item 补（complement）：$A^c$
+        \item De Morgan 律：$(A \cup B)^c = A^c \cap B^c, (A \cap B)^c = A^c \cup B^c$
+    \end{enumerate}
+    
+\end{definition}
+
+\begin{definition}{样本空间（Sample Space）}{样本空间}
+    一个实验的全部可能的结果的集合称为\term{样本空间}.
+\end{definition}
+
+\begin{definition}{事件（event）}{事件}
+    样本空间的子集称为\term{事件}.
+    
+    当实际结果属于一个事件时，称这个事件发生 (occured)
+\end{definition}
+
+
+\begin{tabular}{ll}
+    \toprule
+    \textbf{English} & \textbf{Sets} \\
+    \midrule
+    \textit{Events and occurrences} & \\
+    sample space & \(S\) \\
+    \(s\) is a possible outcome & \(s \in S\) \\
+    \(A\) is an event & \(A \subseteq S\) \\
+    \(A\) occurred & \(s_{\text{actual}} \in A\) \\
+    something must happen & \(s_{\text{actual}} \in S\) \\
+    \midrule
+    \textit{New events from old events} & \\
+    \(A\) or \(B\) (inclusive) & \(A \cup B\) \\
+    \(A\) and \(B\) & \(A \cap B\) \\
+    not \(A\) & \(A^c\) \\
+    \(A\) or \(B\), but not both & \((A \cap B^c) \cup (A^c \cap B)\) \\
+    at least one of \(A_1, \ldots, A_n\) & \(A_1 \cup \cdots \cup A_n\) \\
+    all of \(A_1, \ldots, A_n\) & \(A_1 \cap \cdots \cap A_n\) \\
+    \midrule
+    \textit{Relationships between events} & \\
+    \(A\) implies \(B\) & \(A \subseteq B\) \\
+    \(A\) and \(B\) are mutually exclusive & \(A \cap B = \emptyset\) \\
+    \(A_1, \ldots, A_n\) are a partition of \(S\) & \(A_1 \cup \cdots \cup A_n = S, \, A_i \cap A_j = \emptyset \text{ for } i \neq j\) \\
+    \bottomrule
+\end{tabular}
+
+\newpage
+
+\section{概率与计数的朴素定义}
+
+\subsection{概率}
+
+\begin{definition}{概率（朴素定义）}{概率naive}
+    假设：
+    \begin{enumerate}
+        \item 有限样本空间
+        \item 输出结果等可能
+    \end{enumerate}
+    
+    则：
+    
+    令 $A$ 为一个事件，$S$ 为其样本空间，则 $A$ 的概率为
+    
+    $$
+    P_{naive}(A) = \frac{|A|}{|P|} = \frac{\text{number of outcomes favorable to } A}{\text{total number of outcomes in } S}
+    $$
+    
+    在这种情况下概率被转化为计数问题。
+\end{definition}
+
+\begin{example}{Pascal-Fermat Correspondence}{PF Bet Game}
+    Alice 和 Bob 抛硬币，三次获胜的人赢。每一轮 Alice 赌注硬币为正面 (Head)，Bob 赌注反面 (Tail)。当前比分为 $2 : 1$，若此时结束游戏该如何按可能的结果划分奖品？\\
+    
+    在第五轮游戏必然结束，则剩下两局样本空间为：$S = \{HH, HT, TH, TT\}$，当且仅当投出 $TT$ 时 Bob 获胜，则应该给 Alice $\dfrac{3}{4}$，给 Bob $\dfrac{1}{4}$
+\end{example}
+
+\subsection{计数}
+
+\begin{itemize}
+    \item \textbf{Sampling}: 从集合等可能获取一个元素
+    \item \textbf{With Replacement \& without replacement}: 取出后放回/不放回
+    \item \textbf{Ordered \& Unorderd}
+\end{itemize}
+
+\begin{example}{生日问题}{生日问题}
+    房间内有 $k$ 人，假设一个人生日为一年 $365$ 天内等可能随机一天，生日互相独立，求至少两人有相同生日的概率。\\
+    
+    相当于从集合 $\{1, 2, 3, \dots, 365\}$ 取出 $k$ 个元素，with replacement。令 $A$ 表示“存在两人以上……“的情况，则 $A^c$ 为”没有任何人和别人生日相同“的情况。\\
+    
+    $$
+    P(A^c) = \frac{|A^c|}{|S|} = \frac{\text{without replacement 的 samples}}{\text{with replacement}} = \frac{365!}{365^k} (k \leqslant 365)
+    $$
+    
+    $$
+    P(A) = 1 - P(A^c)
+    $$
+    
+\end{example}
+
+\begin{theorem}{广义生日问题}{GBirthday}
+    从 $n$ 个值中随机选 $k$ 次，当 $k \approx 1.18 \sqrt{n}$ 时，有 50\% 的概率，至少有两个选取的值相同。\\
+    
+    考虑按每个随机变量来计算 $P(A^c)$, 则第一个变量从 $[1, n]$ 选择任意，第二变量必须取到和第一个不同的，第三个取和一、二不同的，并且变量之间相互独立，以此类推：
+    
+    $$
+    P(A^c) = \frac{n}{n} \times \frac{n - 1}{n} \times \frac{n - 2}{n} \cdots \times \frac{n - (k - 1)}{n} = \prod_{i = 1}^{k} \frac{n - i}{n}
+    $$
+    
+    当 $n \gg k$ 时，$\dfrac{n - i}{n} = 1 - \dfrac{i}{n} \approx \mathrm{e}^{-\frac{i}{n}}$，于是 $\prod \frac{n - i}{n} = \mathrm{e}^{-\frac{1 + 2 + \cdots + k - 1}{n}} = \mathrm{e}^{-\frac{k (k - 1)}{2n}} \approx \mathrm{e}^{-\frac{k^2}{2n}}$
+    
+    于是 $P(A) \approx 1 - \mathrm{e}^{-\frac{k^2}{2n}}$
+    
+    代入 $P(A) = 0.5$ 得出 $k = \sqrt{n \cdot 2 \ln 2} \approx 1.18 \sqrt{n}$
+    
+\end{theorem}
+
+\begin{theorem}{多项式定理（Multinomial Theorem）}{Multinomial Theorem}
+    $$
+    (x_1 + x_2 + x_3 + \dots + x_r)^n = \sum_{n_1, n_2, \dots, n_r \geqslant 0} \frac{n!}{n_1 ! n_2 ! \cdots n_r !} x_1^{n_1} x_2^{n_2} \cdots x_r^{n_r} (n_1 + n_2 + \cdots + n_r = n)
+    $$
+    
+    组合意义：把 $n$ 个不同的人分成 $r$ 组
+\end{theorem}
+
+在证明组合恒等式时，可以使用式子两侧组合意义说明等式成立。
+
+\begin{theorem}{吸收/提取恒等式}{AEIdentity}
+    $$
+    n \binom{n - 1}{k - 1} = k \binom{n}{k}
+    $$
+\end{theorem}
+
+\begin{proof}
+    假设有如下场景：从 $n$ 人中选出 $k$ 个组成小队，并且这 $k$ 人中有一人为小队长。\\
+
+    \autoref{thm:AEIdentity} LHS 可以视为先选出小队长（$n$ 种方案），然后在剩下的 $n - 1$ 人中选出小队剩余成员（组合数）. RHS 可以视为先从 $n$ 人中选出组成小队的 $k$ 人（组合数），然后在小队内部选出队长（$k$ 种方案），可知等式成立。
+\end{proof}
+
+\begin{theorem}{Vandermonde 卷积}{Vandermonde}
+    
+    $$
+    \binom{m + n}{k} = \sum_{j = 0}^{k} \binom{m}{j} \binom{n}{k - j}
+    $$
+    
+\end{theorem}
+
+\begin{proof}
+    
+\end{proof}
+
+选择 \( n \) 个对象中的 \( k \) 个对象，可能的方式数量：
+
+\begin{center}
+
+\begin{tabular}{|c|c|c|}
+\hline
+& 顺序有关 & 顺序无关 \\
+\hline
+允许放回 & \( n^k \) & \( \displaystyle \binom{n+k-1}{k} \) \\
+\hline
+不允许放回 & \( n(n-1) \cdots (n-k+1) \) & \( \displaystyle \binom{n}{k} \) \\
+\hline
+\end{tabular}
+
+\end{center}
