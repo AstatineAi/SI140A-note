@@ -61,6 +61,7 @@
 \RequirePackage{mismath} % 包含 rank, span 等运算符
 \RequirePackage{zhnumber}
 \RequirePackage{array}
+\RequirePackage{pgf}
 \RequirePackage{tikz}
 \RequirePackage{rotating}
 
@@ -84,6 +85,9 @@
 \theorembodyfont{\fangsong}
 
 \usetikzlibrary{shapes.symbols}
+\usetikzlibrary{arrows,shapes,positioning, trees}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{positioning}
 
 % 设置页面尺寸
 \IfStrEq{\@LALU@geometry}{16k}{% 载入 16k 版面设置

@@ -167,7 +167,7 @@
 
 \begin{proof}
     假设有如下场景：从 $n$ 人中选出 $k$ 个组成小队，并且这 $k$ 人中有一人为小队长。\\
-
+    
     \autoref{thm:AEIdentity} LHS 可以视为先选出小队长（$n$ 种方案），然后在剩下的 $n - 1$ 人中选出小队剩余成员（组合数）. RHS 可以视为先从 $n$ 人中选出组成小队的 $k$ 人（组合数），然后在小队内部选出队长（$k$ 种方案），可知等式成立。
 \end{proof}
 
@@ -180,8 +180,33 @@
 \end{theorem}
 
 \begin{proof}
+    假设有如下场景：有 $m$ 个男生和 $n$ 个女生，从中选出 $k$ 个人作为一组。\\
     
+    \autoref{thm:Vandermonde} LHS 即为直接选择，RHS 为，枚举从男生中选出几个人（$j$ 从 $0$ 到 $k$），然后选出 $\binom{m}{j}$ ，再从女生中选出剩下的人（$\binom{n}{k - j}$）
 \end{proof}
+
+\begin{theorem}{Bose-Einstein 计数定理}{BECounting}
+    组合意义：可重复选择，顺序无影响，从 $n$ 中选 $k$\\
+    
+    形式描述：$x_1 + x_2 + \cdots + x_n = k, x_i \in \mathbb{N}, i = 0, 1, 2, \dots, n$, 这个不定方程的解的个数为
+    
+    $$
+    \binom{n + k - 1}{n - 1}
+    $$
+    
+    类似的，当解要求必须为正时，可以按照\textbf{隔板法}求解
+\end{theorem}
+
+\begin{example}{}{}
+    求如下方程解的个数：
+    
+    $$
+    x_1 + x_2 + x_3 + x_4 = 88, x_1 \ge 3, x_2 \ge 5, x_3 \ge 8, x_4 \ge 10
+    $$
+    
+    令 $y_1 = x_1 - 3, y_2 = x_2 - 5, y_3 = x_3 - 8, y_4 = x_4 - 10$，转化为 \autoref{thm:BECounting}
+    
+\end{example}
 
 选择 \( n \) 个对象中的 \( k \) 个对象，可能的方式数量：
 
@@ -196,5 +221,160 @@
 不允许放回 & \( n(n-1) \cdots (n-k+1) \) & \( \displaystyle \binom{n}{k} \) \\
 \hline
 \end{tabular}
+
+\end{center}
+
+\section{其他非公理化的概率定义}
+
+\subsection{无限样本空间中的概率}
+
+按照测度理论的几何度量定义。
+
+\begin{example}{}{}
+    随机变量 $x \in [0, 3]$, 求 $x$ 到 $0$ 比到 $1$ 更近的概率.\\
+    
+    一维的几何度量为线段长度：
+    
+    $$
+    P(A) = \frac{\text{Length of } [0, 0.5]}{\text{Length of } [0, 3]}
+    $$
+\end{example}
+
+\begin{example}{}{}
+    随机变量 $x \in [1, 2]$, 求 $P(x = 1.5)$\\
+    
+    将 $[1, 2]$ 分为 $[1, 1 + \frac{1}{2n + 1}), [1 + \frac{1}{2n + 1}, 1 + \frac{2}{2n + 1}), \cdots$
+    
+    可知对任何一个区间， $P(x \in [l, r)) = \dfrac{1}{2n + 1}$
+    
+    $$
+    \forall n \ge 1, 0 \ge P(x = 1.5) \le P(x \in A_n) = \dfrac{1}{2n + 1}
+    $$
+    
+    令 $n \to \infty$, 可知 $P(x = 1.5) = 0$
+\end{example}
+
+在上面的例子中，出现了概率为 $0$ 的事件，但是那个事件并不是不可能时间。
+
+一个不可能事件概率为 $0$，概率为 $0$ 的事件为\textbf{事件测度为 0}，不代表事件不会发生。
+
+更高维度也有相似的测度定义的概率：
+
+\begin{example}{}{}
+    在一个正方形中均匀任取一点，求这个点在正方形内接圆的概率。
+    \begin{center}
+    \begin{tikzpicture}
+
+    % Draw the square
+    \draw (-1, -1) rectangle (1, 1);
+    
+    % Draw the circle
+    \draw (0, 0) circle (1);
+    
+    % Draw the arrow
+    \draw[->] (0,0) -- (1,0);
+    \draw[<-] (0,0) -- (1,0);
+    \node at (0.5, 0.2) {1};
+    
+    % Draw points
+    \fill (0,0) circle (1pt);
+    
+    % Add coordinates
+    \node at (-1, 1.2) {$(-1,1)$};
+    \node at (1, 1.2) {$(1,1)$};
+    \node at (-1, -1.2) {$(-1,-1)$};
+    \node at (1, -1.2) {$(1,-1)$};
+    \node at (0, -0.2) {$(0,0)$};
+    
+    \end{tikzpicture}
+    \end{center}
+    
+    二维的测度使用面积衡量。
+    
+    $$
+    P(A) = \frac{S_{\text{circle}}}{S_{\text{square}}} = \frac{\pi}{4}
+    $$
+    
+\end{example}
+
+\subsection{统计定义的概率}
+
+概率是重复一个实验很多次后得到的频率。
+
+\textbf{大数定理，Monte Carlo 方法}
+
+\newpage
+
+\section{公理化的概率定义}
+
+\begin{definition}{公理化的概率}{概率}
+    给定样本空间 $S$，构成事件类的 $S$ 子集满足如下公理
+    
+    \begin{enumerate}
+        \item $S$ 是一个事件
+        \item 对于任何事件 $A$，其补集是事件
+        \item 可列的数个事件的并是事件
+    \end{enumerate}
+    
+    概率函数 $P: A \to \mathbb{R}$ 满足如下公理
+    
+    \begin{enumerate}
+        \item $P(\emptyset) = 0, P(S) = 1$
+        \item 对于互不相交的事件 $A_1, A_2, \dots$
+    \end{enumerate}
+    
+    $$
+    P\left(\bigcup_{j = 1}^{\infty} A_j \right) = \sum_{j = 1}^{\infty} P(A_j)
+    $$
+\end{definition}
+
+根据上述概率的公理，可以导出一些概率的性质：
+
+\begin{itemize}
+    \item $P(A^c) = 1 - P(A)$
+    \item 若 $A \subseteq B$，则 $P(A) \leq P(B)$
+    \item $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+\end{itemize}
+
+\begin{theorem}{容斥原理}{IEFormula}
+    对于任何 $n$ 个事件 $A_1, A_2, \dots, A_n$
+    
+    $$
+    P\left(\bigcup_{i = 1}^{n} A_i\right) = \sum_i P(A_i) - \sum_{i < j} P(A_i \cap A_j) + \cdots + (-1)^{n + 1} P(A_1 \cap A_2 \cap \cdots \cap A_n)
+    $$
+\end{theorem}
+
+\begin{example}{De Montmort 匹配问题}{}
+    从均匀洗牌的 $n$ 张卡的卡堆内，卡按照 $1 \sim n$ 标号，逐张翻开卡牌，若有任何一次满足翻开第 $k$ 张时，那张牌标号为 $k$ 则获胜。
+    
+    令 $A_i$ 表示第 $i$ 张开的牌标号为 $i$ 的事件，则 $P(\text{win}) = P(A_1 \cap A_2 \cap \cdots \cap A_n)$
+    
+    $P(A_i) = \dfrac{1}{n}$
+    
+    根据对称性，$P(A_i \cup A_j \cup A_k \cdots \cup A_p)$ 对于相同的 $p$ 都相同
+    
+    $$
+    P(A_i \cup A_j \cup A_k \cdots \cup A_p) = 
+    $$
+\end{example}
+
+用于分析具有不确定结果的现象的框架:
+\begin{itemize}
+    \item 保持一致推理的规则
+    \item 用于预测和决策
+\end{itemize}
+
+\begin{center}
+
+\begin{tikzpicture}[node distance=3cm]
+    \node [square, draw] (realworld) {现实世界};
+    \node [square, draw] (inference) [below of=realworld] {推理/统计};
+    \node [square, draw] (probability) [right of=inference, xshift=2cm] {概率论(分析)};
+
+    \draw [->] (realworld) -- node[anchor=east] {数据} (inference);
+    \draw [->] (inference) -- node[anchor=south] {模型} (probability);
+    \draw [->] (probability) -- node[anchor=west] {预测/决策} (realworld);
+
+\end{tikzpicture}
 
 \end{center}
